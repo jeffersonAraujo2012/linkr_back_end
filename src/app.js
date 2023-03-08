@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import authRouter from "./routers/AuthRouter.js"
+import searchRouter from "./routers/SearchRouter.js"
 import utilsRouter from "./routers/utils.router.js"
 import postsRouter from "./routers/posts.router.js"
 
@@ -10,7 +11,8 @@ dotenv.config()
 app.use(express.json())
 app.use(cors())
 
-app.use( [ authRouter ] );
+app.use( [ authRouter, searchRouter ] )
+app.use( [ authRouter, searchRouter ] );
 app.use('/utils', utilsRouter);
 app.use('/posts', postsRouter);
 
