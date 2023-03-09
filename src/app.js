@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRouter from "./routers/AuthRouter.js";
-import searchRouter from "./routers/SearchRouter.js";
+import searchRouter from "./routers/search.router.js";
 import utilsRouter from "./routers/utils.router.js";
 import postsRouter from "./routers/posts.router.js";
 import hashtagsRouter from "./routers/hashtags.router.js";
