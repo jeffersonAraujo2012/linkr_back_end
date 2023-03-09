@@ -1,4 +1,4 @@
-import { deletePostQuery, editPostQuery } from "../repositories/posts.repository.js";
+import { deletePostQuery, editPostQuery, likePostQuery } from "../repositories/posts.repository.js";
 
 export async function editPost(req, res) {
 
@@ -30,6 +30,21 @@ export async function deletePost(req, res) {
     }
     catch (error) {
         res.status(500)
+    }
+
+}
+
+export async function likePost(req, res) {
+
+    const post = req.body
+
+    try {
+        const result = await likePostQuery(post);
+
+        res.sendStatus(200);
+    }
+    catch (error) {
+        res.status(500).send(error.message)
     }
 
 }
