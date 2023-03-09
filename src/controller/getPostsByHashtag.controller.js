@@ -1,4 +1,4 @@
-import getPostsQuery from "../repositories/getPosts.repository.js";
+import { getPostsQuery } from "../repositories/getPosts.repository.js";
 
 export default async function getPosts(req, res) {
   try {
