@@ -1,6 +1,6 @@
 import { db } from "../config/database.js";
 
-export default async function getPostsQuery() {
+export async function getPostsQuery() {
   const result = await db.query(
     `SELECT posts.*, users.username, users.picture_url AS picture_user
     FROM posts
@@ -15,7 +15,7 @@ export default async function getPostsQuery() {
   return result.rows;
 }
 
-export default async function getPostsByIdQuery() {
+export async function getPostsByIdQuery() {
   const result = await db.query(
     `SELECT posts.*, users.username, users.picture_url AS picture_user
     FROM posts
