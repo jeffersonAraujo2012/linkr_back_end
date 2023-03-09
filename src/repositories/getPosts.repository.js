@@ -14,3 +14,18 @@ export default async function getPostsQuery() {
   }
   return result.rows;
 }
+
+export default async function getPostsByIdQuery() {
+  const result = await db.query(
+    `SELECT posts.*, users.username, users.picture_url AS picture_user
+    FROM posts
+    JOIN users
+    ON posts.user_id = users.id
+    ORDER BY created_at DESC
+    LIMIT 20`
+  );
+  if (result.rowCount === 0) {
+    return [];
+  }
+  return result.rows;
+}
