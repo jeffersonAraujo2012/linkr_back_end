@@ -4,7 +4,7 @@ export default async function createPostQuery(post, hashtagsId) {
   const p = await db.query(
     `INSERT INTO posts (url, description, user_id) VALUES ($1, $2, $3)
      RETURNING id`,
-    [post.url, post.description, post.userId]
+    [post.url, post.description, post.user_id]
   );
 
   for (let i = 0; i < hashtagsId.length; i++) {
