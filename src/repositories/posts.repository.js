@@ -20,15 +20,19 @@ export async function editPostQuery(post, hashtagsId) {
     return result
 }
 
-export async function deletePostQuery(post) {
+export async function deletePostQuery(post) {    
     const postUser = await db.query(
         `SELECT * FROM posts
          WHERE id = $1 AND user_id = $2`,
           [post.id, post.user_id]);
-
+        
     if (postUser.rowCount === 0) return 0
 
-    const result = await db.query(`DELETE FROM posts WHERE id=$1`, [post.id])
+    await db.query(`DELETE FROM posts_hashtags WHERE post_id = $1`, [post.id])
+
+    await db.query(`DELETE FROM likes WHERE post_id = $1`, [post.id])
+
+    const result = await db.query(`DELETE FROM posts WHERE id = $1`, [post.id])
 
     return result
 }
