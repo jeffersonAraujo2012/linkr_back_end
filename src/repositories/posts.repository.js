@@ -28,7 +28,11 @@ export async function deletePostQuery(post) {
         
     if (postUser.rowCount === 0) return 0
 
+    const hashtag = await db.query(`SELECT * FROM posts_hashtags WHERE post_id = $1`, [post.id])
+
     await db.query(`DELETE FROM posts_hashtags WHERE post_id = $1`, [post.id])
+
+    await db.query(`DELETE FROM hashtags WHERE id = $1`, [hashtag.rows[0].hashtag_id])
 
     await db.query(`DELETE FROM likes WHERE post_id = $1`, [post.id])
 
