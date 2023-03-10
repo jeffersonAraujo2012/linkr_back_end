@@ -1,11 +1,18 @@
+import createHashtag from "../repositories/createHashtag.repository.js";
 import { deletePostQuery, editPostQuery, likePostQuery } from "../repositories/posts.repository.js";
 
 export async function editPost(req, res) {
 
     const post = req.body
+    const hashtagRegex = /#\S*/gm;
+    let hashtags = post.description.match(hashtagRegex) || [];
+    hashtags = hashtags.map((hashtag) => hashtag.slice(1));
 
-    try {
-        const result = await editPostQuery(post);
+  try {
+    let resultCreateHashtags = await createHashtag(hashtags);
+    const hashtagsId = resultCreateHashtags.map((hashtag) => hashtag.rows[0]);
+
+    const result = await editPostQuery(post, hashtagsId);
 
         if (result === 0) return res.status(404).send('Escolha um post de sua autoria para editar.')
 
@@ -36,12 +43,12 @@ export async function deletePost(req, res) {
 
 export async function likePost(req, res) {
 
-    const post = req.body
+    const postAndUser = req.body
 
     try {
-        const result = await likePostQuery(post);
+        const result = await likePostQuery(postAndUser);
 
-        res.sendStatus(200);
+        res.send({ ...result });
     }
     catch (error) {
         res.status(500).send(error.message)

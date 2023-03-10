@@ -3,7 +3,7 @@ import { v4 as uuidV4 } from "uuid"
 import { db } from "../config/database.js"
 
 export async function signUp (req, res) {
-    const { name, email, password, pictureUrl } = req.body
+    const { username, email, password, picture_url } = req.body
 
     const hashPassword = bcrypt.hashSync(password, 10)
 
@@ -12,8 +12,8 @@ export async function signUp (req, res) {
         if(checkUser.rowCount > 0) return res.sendStatus(409)
 
         await db.query (`INSERT INTO users 
-        (name, email, password) 
-        VALUES ($1, $2, $3, $4);`, [name, email, hashPassword, pictureUrl]);
+        (username, email, password, picture_url) 
+        VALUES ($1, $2, $3, $4);`, [username, email, hashPassword, picture_url]);
 
         res.sendStatus(201);
     } catch (error) {
