@@ -30,7 +30,7 @@ export async function deletePost(req, res) {
 
     try {
         const result = await deletePostQuery(post);
-
+        // console.log('teste')
         if (result === 0) return res.status(404).send('Vocẽ só pode deletar posts de sua autoria.')
 
         res.status(200).send('post deletado!');
