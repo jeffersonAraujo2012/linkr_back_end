@@ -36,7 +36,7 @@ export async function signIn(req, res) {
 
     const token = jwt.sign(userData, process.env.JWT_SECRET);
 
-    return res.status(200).send({ token: token });
+    return res.status(200).send({ ...userData, token: token });
   } catch (error) {
     return res.status(500).send(error.message);
   }
