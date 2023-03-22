@@ -32,9 +32,7 @@ export async function signIn(req, res) {
     if (!senhaCorreta) return res.sendStatus(401);
 
     const userData = existe.rows[0];
-    delete userData.password;
-
-    const token = jwt.sign(userData, process.env.JWT_SECRET);
+    const token = jwt.sign(userData.id, process.env.JWT_SECRET);
 
     return res.status(200).send({ ...userData, token: token });
   } catch (error) {

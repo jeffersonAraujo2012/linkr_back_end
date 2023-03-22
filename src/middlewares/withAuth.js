@@ -16,7 +16,7 @@ export default async function withAuth(req, res, next) {
     try {
       const token = auth.split(' ')[1];
       const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
-      res.locals.user = decodedUser;
+      res.locals.userId = decodedUser;
       next();
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
