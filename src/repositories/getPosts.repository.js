@@ -1,13 +1,19 @@
 import { db } from "../config/database.js";
 
-export async function getPostsQuery() {
+export async function getPostsQuery(id) {
   const result = await db.query(
+    // `SELECT posts.*, users.username, users.picture_url AS picture_user
+    // FROM posts
+    // JOIN users
+    // ON posts.user_id = users.id
+    // ORDER BY created_at DESC
+    // LIMIT 20`
     `SELECT posts.*, users.username, users.picture_url AS picture_user
     FROM posts
-    JOIN users
-    ON posts.user_id = users.id
+    JOIN follows f ON f.followed_id = posts.user_id AND f.follower_id = $1
+    JOIN users ON posts.user_id = users.id
     ORDER BY created_at DESC
-    LIMIT 20`
+    LIMIT 20;`, [id]
   );
   if (result.rowCount === 0) {
     return [];

@@ -1,10 +1,10 @@
 import { searchUserById, searchUserByName } from "../repositories/search.repository.js";
 
 export async function getUserByName (req, res) {
-    const { name } = req.params;
+    const { id, name } = req.params;
 
     try {
-        const user = await searchUserByName(name);
+        const user = await searchUserByName(id, name);
 
         res.send(user.rows);
     } catch (error) {
