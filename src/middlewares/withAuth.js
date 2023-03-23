@@ -15,7 +15,7 @@ export default async function withAuth(req, res, next) {
   
     try {
       const token = auth.split(' ')[1];
-      const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
+      const decodedUser = jwt.verify(token, process.env.SECRET_KEY);
       res.locals.userId = decodedUser;
       next();
     } catch (error) {
