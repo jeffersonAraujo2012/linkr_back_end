@@ -2,13 +2,16 @@ import { db } from "../config/database.js";
 
 export async function getPostsQuery() {
   const result = await db.query(
-    `SELECT posts.*, users.username, users.picture_url AS picture_user
+    `SELECT posts.*, users.username, users.picture_url AS picture_user, COUNT(likes.id) AS likes_count
     FROM posts
-    JOIN users
-    ON posts.user_id = users.id
-    ORDER BY created_at DESC
-    LIMIT 20`
+    JOIN users ON posts.user_id = users.id
+    LEFT JOIN likes ON posts.id = likes.post_id
+    GROUP BY posts.id, users.username, users.id, picture_user
+    ORDER BY posts.created_at DESC
+    LIMIT 20;
+    `
   );
+  console.log(result.rows)
   if (result.rowCount === 0) {
     return [];
   }
