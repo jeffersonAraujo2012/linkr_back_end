@@ -47,21 +47,21 @@ export async function likePostQuery(postAndUser) {
         const like = await db.query(
             `SELECT * FROM likes
              WHERE post_id = $1 AND user_id = $2`,
-             [postAndUser.data.id, postAndUser.data.user_id]);
+             [postAndUser.id, postAndUser.user]);
 
         if (like.rowCount === 1) {
             const removeLike = await db.query(
                 `DELETE FROM likes WHERE user_id = $1 AND post_id = $2`,
-                 [postAndUser.data.user_id, postAndUser.data.id]);
+                 [postAndUser.user, postAndUser.id]);
             
-            const quantLike = await db.query(`SELECT count(*) FROM likes WHERE post_id = $1`, [postAndUser.data.id])
+            const quantLike = await db.query(`SELECT count(*) FROM likes WHERE post_id = $1`, [postAndUser.id])
             console.log(quantLike.rows)
             return quantLike.rows[0]
         }
 
-        const updateLikes = await db.query(`INSERT INTO likes (user_id, post_id) VALUES ($1, $2)`, [postAndUser.data.user_id, postAndUser.data.id])
+        const updateLikes = await db.query(`INSERT INTO likes (user_id, post_id) VALUES ($1, $2)`, [postAndUser.user, postAndUser.id])
 
-        const quantLike = await db.query(`SELECT count(*) FROM likes WHERE post_id = $1`, [postAndUser.data.id])
+        const quantLike = await db.query(`SELECT count(*) FROM likes WHERE post_id = $1`, [postAndUser.id])
 
         return quantLike.rows[0]
 }
