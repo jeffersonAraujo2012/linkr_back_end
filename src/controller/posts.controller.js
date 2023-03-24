@@ -45,7 +45,7 @@ export async function deletePost(req, res) {
 export async function likePost(req, res) {
 
     const postAndUser = req.body
-
+    console.log(postAndUser)
     try {
         const result = await likePostQuery(postAndUser);
 
