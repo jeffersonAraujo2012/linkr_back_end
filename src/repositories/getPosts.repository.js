@@ -8,13 +8,43 @@ export async function getPostsQuery(id) {
     // ON posts.user_id = users.id
     // ORDER BY created_at DESC
     // LIMIT 20`
+    
     `SELECT posts.*, users.username, users.picture_url AS picture_user
     FROM posts
     JOIN follows f ON f.followed_id = posts.user_id AND f.follower_id = $1
     JOIN users ON posts.user_id = users.id
     ORDER BY created_at DESC
     LIMIT 20;`, [id]
+    
+    //`SELECT 
+    //posts.*, 
+    //users.username, 
+    //users.picture_url AS picture_user, 
+    //COUNT(likes.id) AS likes_count, 
+    //array_agg(liked_users.id) AS liked_by
+  //FROM 
+    //posts
+    //JOIN users ON posts.user_id = users.id
+    //LEFT JOIN likes ON posts.id = likes.post_id
+    //LEFT JOIN (
+      //SELECT 
+        //likes.post_id, 
+        //users.id 
+      //FROM 
+        //likes 
+        //JOIN users ON likes.user_id = users.id
+   //) liked_users ON posts.id = liked_users.post_id
+  //GROUP BY 
+    //posts.id, 
+    //users.username, 
+    //users.id, 
+    //picture_user
+  //ORDER BY 
+    //posts.created_at DESC
+  //LIMIT 20;  
+    //`
   );
+  console.log(result.rows)
   if (result.rowCount === 0) {
     return [];
   }
