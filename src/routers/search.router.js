@@ -6,7 +6,7 @@ import withAuth from "../middlewares/withAuth.js";
 const searchRouter = Router();
 
 searchRouter.get("/users/me", withAuth, getMe);
-searchRouter.get("/users/:name", getUserByName);
+searchRouter.get("/users/:id/:name", getUserByName);
 searchRouter.get("/user/:id", getUserById);
 
 export default searchRouter;

@@ -11,7 +11,7 @@ import { validateSchema } from "../middlewares/validateSchema.js";
 import postSchema from "../schemas/post.schema.js";
 const postsRouter = express.Router();
 
-postsRouter.get("/", getPosts);
+postsRouter.get("/:id", getPosts);
 postsRouter.get("/hashtag/:hashtag", getPostsByHashtag);
 postsRouter.post("/", validateSchema(postSchema), createPost);
 postsRouter.patch("/", editPost);
