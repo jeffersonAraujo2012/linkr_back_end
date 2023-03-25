@@ -53,12 +53,12 @@ export async function getPostsQuery(id) {
     ON likes.post_id = posts.id
     WHERE posts.user_id IN (
       SELECT followed_id FROM follows
-      WHERE follows.follower_id = 4
-    ) OR posts.user_id = 4
+      WHERE follows.follower_id = $1
+    ) OR posts.user_id = $1
     GROUP BY (posts.id, users.username, users.picture_url)
     ORDER BY posts.created_at DESC
     LIMIT 20;    
-    `
+    `,[id]
 
   );
   console.log(result.rows)
