@@ -65,3 +65,18 @@ export async function likePostQuery(postAndUser) {
 
         return quantLike.rows[0]
 }
+
+export async function repostQuery(postAndUser) {
+
+  const post = await db.query(`
+      SELECT * FROM reposts WHERE post_id = $1 AND user_id = $2`,
+      [postAndUser.id, postAndUser.user]);
+
+  if  (post.rowCount > 0) return 0
+
+  await db.query(`INSERT INTO reposts (post_id, user_id)
+                  VALUES ($1, $2)`,
+                  [postAndUser.id, postAndUser.user]);
+
+  return
+}

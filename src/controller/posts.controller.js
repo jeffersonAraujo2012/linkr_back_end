@@ -1,5 +1,5 @@
 import createHashtag from "../repositories/createHashtag.repository.js";
-import { deletePostQuery, editPostQuery, likePostQuery } from "../repositories/posts.repository.js";
+import { deletePostQuery, editPostQuery, likePostQuery, repostQuery } from "../repositories/posts.repository.js";
 
 export async function editPost(req, res) {
 
@@ -55,4 +55,21 @@ export async function likePost(req, res) {
         res.status(500).send(error.message)
     }
 
+}
+
+export async function repost() {
+
+    postAndUser = req.body
+
+    try {        
+        const result = await repostQuery(postAndUser);
+
+        if (result === 0) return res.status(404).send('Vocẽ já repostou esse post.')
+
+        
+        res.status(200).send('repost concluído!');
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 }

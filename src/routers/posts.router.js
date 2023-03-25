@@ -6,6 +6,7 @@ import {
   deletePost,
   editPost,
   likePost,
+  repost,
 } from "../controller/posts.controller.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
 import postSchema from "../schemas/post.schema.js";
@@ -17,5 +18,6 @@ postsRouter.post("/", validateSchema(postSchema), createPost);
 postsRouter.patch("/", editPost);
 postsRouter.delete("/", deletePost);
 postsRouter.post("/like", likePost);
+postsRouter.post("/repost", repost);
 
 export default postsRouter;
